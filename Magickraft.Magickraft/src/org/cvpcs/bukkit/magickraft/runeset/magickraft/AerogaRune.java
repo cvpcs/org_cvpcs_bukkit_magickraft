@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.event.block.BlockRightClickEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.Location;
@@ -200,7 +200,7 @@ public class AerogaRune extends Rune {
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRuneRightClick(BlockRightClickEvent event) {
+    public boolean onRunePlace(BlockPlaceEvent event) {
         Block block = event.getBlock();
 
         // is it an Aeroga rune?
@@ -305,7 +305,7 @@ public class AerogaRune extends Rune {
 
                     if(dist <= radius) {
                         entityLoc.setY(entityLoc.getY() + (double)raise);
-                        entity.teleportTo(entityLoc);
+                        entity.teleport(entityLoc);
                     }
                 }
 

@@ -1,6 +1,6 @@
 package org.cvpcs.bukkit.magickraft.runeset.runecraft;
 
-import org.bukkit.event.block.BlockRightClickEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,7 +35,7 @@ public class MagicBeaconRune extends Rune {
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRuneRightClick(BlockRightClickEvent event) {
+    public boolean onRunePlace(BlockPlaceEvent event) {
         Block block = event.getBlock();
 
         // look for a beacon

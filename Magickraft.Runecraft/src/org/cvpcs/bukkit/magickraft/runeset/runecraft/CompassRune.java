@@ -1,6 +1,6 @@
 package org.cvpcs.bukkit.magickraft.runeset.runecraft;
 
-import org.bukkit.event.block.BlockRightClickEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
@@ -21,7 +21,7 @@ public class CompassRune extends Rune {
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRuneRightClick(BlockRightClickEvent event) {
+    public boolean onRunePlace(BlockPlaceEvent event) {
         Block block = event.getBlock();
 
         if (tryRune(block)) {

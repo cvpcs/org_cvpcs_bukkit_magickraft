@@ -1,10 +1,9 @@
 package org.cvpcs.bukkit.magickraft.runeset.runecraft;
 
-import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
-import org.bukkit.event.block.BlockRightClickEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockDamageLevel;
 import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
 import org.bukkit.Location;
@@ -90,7 +89,7 @@ public class DoorRune extends Rune {
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRuneRightClick(BlockRightClickEvent event) {
+    public boolean onRunePlace(BlockPlaceEvent event) {
         Block block = event.getBlock();
 
         // look for a door
@@ -125,7 +124,7 @@ public class DoorRune extends Rune {
     }
 
     @Override
-    public boolean onRuneUseRightClick(BlockRightClickEvent event) {
+    public boolean onRuneUsePlace(BlockPlaceEvent event) {
         Block block = event.getBlock();
 
         // look for a door
@@ -198,29 +197,27 @@ public class DoorRune extends Rune {
     }
 
     @Override
-    public boolean onRuneDamage(BlockDamageEvent event) {
-        if(event.getDamageLevel() == BlockDamageLevel.BROKEN) {
-            Block block = event.getBlock();
-            Door door = null;
+    public boolean onRuneBreak(BlockBreakEvent event) {
+        Block block = event.getBlock();
+        Door door = null;
 
-            for(int i = 0; i < 3 && door == null; i++) {
-                block = event.getBlock().getFace(BlockFace.UP, i);
-                door = getDoor(block.getLocation());
-            }
+        for(int i = 0; i < 3 && door == null; i++) {
+            block = event.getBlock().getFace(BlockFace.UP, i);
+            door = getDoor(block.getLocation());
+        }
 
-            if(door != null) {
-                deleteDoor(door);
-                event.getPlayer().sendMessage("Door rune destroyed");
+        if(door != null) {
+            deleteDoor(door);
+            event.getPlayer().sendMessage("Door rune destroyed");
 
-                // players don't get minerals back for this
-                event.setCancelled(true);
+            // players don't get minerals back for this
+            event.setCancelled(true);
 
-                // wipe out the door
-                block.setType(Material.AIR);
-                block.getFace(BlockFace.DOWN, 1).setType(Material.AIR);
-                block.getFace(BlockFace.DOWN, 2).setType(Material.AIR);
-                return true;
-            }
+            // wipe out the door
+            block.setType(Material.AIR);
+            block.getFace(BlockFace.DOWN, 1).setType(Material.AIR);
+            block.getFace(BlockFace.DOWN, 2).setType(Material.AIR);
+            return true;
         }
 
         return false;

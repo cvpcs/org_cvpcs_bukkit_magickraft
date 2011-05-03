@@ -2,9 +2,9 @@ package org.cvpcs.bukkit.magickraft;
 
 import org.bukkit.Material;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockListener;
-import org.bukkit.event.block.BlockRightClickEvent;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockListener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class RuneRunner extends BlockListener {
     }
 
     @Override
-    public void onBlockRightClick(BlockRightClickEvent event)
+    public void onBlockPlace(BlockPlaceEvent event)
     {
         // we don't run runes if they're holding a block besides air (we're just like that)
         if(event.getPlayer().getItemInHand().getType().isBlock() &&
@@ -44,7 +44,7 @@ public class RuneRunner extends BlockListener {
 
         for(Rune rune : mRunes) {
             if (rune.getEnabled()) {
-                if (rune.onRuneUseRightClick(event)) {
+                if (rune.onRuneUsePlace(event)) {
                     return;
                 }
             }
@@ -52,7 +52,7 @@ public class RuneRunner extends BlockListener {
 
         for(Rune rune : mRunes) {
             if (rune.getEnabled()) {
-                if (rune.onRuneRightClick(event)) {
+                if (rune.onRunePlace(event)) {
                     return;
                 }
             }

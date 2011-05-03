@@ -35,8 +35,8 @@ public class Magickraft extends JavaPlugin {
 
         mRuneRunner = new RuneRunner();
 
-        getServer().getPluginManager().registerEvent(Event.Type.BLOCK_RIGHTCLICKED, mRuneRunner, Priority.Normal, this);
-        getServer().getPluginManager().registerEvent(Event.Type.BLOCK_DAMAGED, mRuneRunner, Priority.Normal, this);
+        getServer().getPluginManager().registerEvent(Event.Type.PLAYER_INTERACT, mRuneRunner, Priority.Normal, this);
+        getServer().getPluginManager().registerEvent(Event.Type.BLOCK_DAMAGE, mRuneRunner, Priority.Normal, this);
         getServer().getPluginManager().registerEvent(Event.Type.BLOCK_BREAK, mRuneRunner, Priority.Normal, this);
         getServer().getPluginManager().registerEvent(Event.Type.REDSTONE_CHANGE, mRuneRunner, Priority.Normal, this);
 

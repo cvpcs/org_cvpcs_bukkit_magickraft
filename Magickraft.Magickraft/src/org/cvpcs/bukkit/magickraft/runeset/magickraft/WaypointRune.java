@@ -1,9 +1,8 @@
 package org.cvpcs.bukkit.magickraft.runeset.magickraft;
 
-import org.bukkit.event.block.BlockRightClickEvent;
-import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockDamageLevel;
 import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
 import org.bukkit.Location;
@@ -214,7 +213,7 @@ public class WaypointRune extends Rune {
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRuneRightClick(BlockRightClickEvent event) {
+    public boolean onRunePlace(BlockPlaceEvent event) {
         Block block = event.getBlock();
 
         // look for a waypoint and see if it's a valid teleporter
@@ -279,7 +278,7 @@ public class WaypointRune extends Rune {
     }
 
     @Override
-    public boolean onRuneUseRightClick(BlockRightClickEvent event) {
+    public boolean onRuneUsePlace(BlockPlaceEvent event) {
         Block block = event.getBlock();
 
         // look for a waypoint and see if it's a valid teleporter
@@ -307,7 +306,7 @@ public class WaypointRune extends Rune {
                             }
 
                             // teleport!
-                            event.getPlayer().teleportTo(destBlock.getLocation());
+                            event.getPlayer().teleport(destBlock.getLocation());
                         } else {
                             // the destination world can't be found, so wipe out that shit
                             dest.delete();
@@ -393,64 +392,62 @@ public class WaypointRune extends Rune {
     }
 
     @Override
-    public boolean onRuneDamage(BlockDamageEvent event) {
+    public boolean onRuneBreak(BlockBreakEvent event) {
         // only care if destroying the block
-        if(event.getDamageLevel() == BlockDamageLevel.BROKEN) {
-            Block block = event.getBlock();
+        Block block = event.getBlock();
 
-            int radius = (RUNE_WIDTH - 1)/2;
+        int radius = (RUNE_WIDTH - 1)/2;
 
-            // are we destroying a waypoint?
-            Waypoint wp = new Waypoint();
-            if(wp.findAndLoad(block.getLocation(), radius)) {
-                // to save time and processing power, we determine if they're destroying a part of the
-                // waypoint based on mathematics, and not straight comparison of the rune
-                int bx = block.getLocation().getBlockX();
-                int bz = block.getLocation().getBlockZ();
-                int wx = wp.mLocation.getBlockX();
-                int wz = wp.mLocation.getBlockZ();
+        // are we destroying a waypoint?
+        Waypoint wp = new Waypoint();
+        if(wp.findAndLoad(block.getLocation(), radius)) {
+            // to save time and processing power, we determine if they're destroying a part of the
+            // waypoint based on mathematics, and not straight comparison of the rune
+            int bx = block.getLocation().getBlockX();
+            int bz = block.getLocation().getBlockZ();
+            int wx = wp.mLocation.getBlockX();
+            int wz = wp.mLocation.getBlockZ();
 
-                double dist = Math.sqrt(Math.pow(wx - bx, 2) + Math.pow(wz - bz, 2));
+            double dist = Math.sqrt(Math.pow(wx - bx, 2) + Math.pow(wz - bz, 2));
 
-                // if dist == 1, then we are at one of the signature blocks, which we allow people to replace,
-                // so let it go this time
-                if(dist == 1) {
-                    return true;
-                }
-
-                // if the rounded distance is > radius, we are out of bounds and good to go
-                if(dist > radius) {
-                    return true;
-                }
-
-                // damn, shit is going down disable the destruction
-                event.setCancelled(true);
-
-                // set the waypoint to cobblestone
-                setWaypointBlockAll(wp, Material.COBBLESTONE);
-
-                // set the block we destroyed to air
-                block.setType(Material.AIR);
-
-                // was this waypoint connected?
-                if(wp.mWaypointId >= 0) {
-                    // SHIT, need to destroy the other end too
-                    Waypoint wpOther = new Waypoint();
-                    if(wpOther.load(wp.mWaypointId)) {
-                        // reset its blocks to cobblestone
-                        setWaypointBlockAll(wpOther, Material.COBBLESTONE);
-
-                        // delete
-                        wpOther.delete();
-                    }
-                }
-
-                // lastly, delete this waypoint
-                wp.delete();
-
-                // submit a message to the player
-                event.getPlayer().sendMessage("Waypoint destroyed");
+            // if dist == 1, then we are at one of the signature blocks, which we allow people to replace,
+            // so let it go this time
+            if(dist == 1) {
+                return true;
             }
+
+            // if the rounded distance is > radius, we are out of bounds and good to go
+            if(dist > radius) {
+                return true;
+            }
+
+            // damn, shit is going down disable the destruction
+            event.setCancelled(true);
+
+            // set the waypoint to cobblestone
+            setWaypointBlockAll(wp, Material.COBBLESTONE);
+
+            // set the block we destroyed to air
+            block.setType(Material.AIR);
+
+            // was this waypoint connected?
+            if(wp.mWaypointId >= 0) {
+                // SHIT, need to destroy the other end too
+                Waypoint wpOther = new Waypoint();
+                if(wpOther.load(wp.mWaypointId)) {
+                    // reset its blocks to cobblestone
+                    setWaypointBlockAll(wpOther, Material.COBBLESTONE);
+
+                    // delete
+                    wpOther.delete();
+                }
+            }
+
+            // lastly, delete this waypoint
+            wp.delete();
+
+            // submit a message to the player
+            event.getPlayer().sendMessage("Waypoint destroyed");
         }
 
         return false;

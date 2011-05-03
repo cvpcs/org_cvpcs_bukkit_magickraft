@@ -4,7 +4,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
-import org.bukkit.event.block.BlockRightClickEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.World;
 
 import java.io.BufferedReader;
@@ -38,7 +38,7 @@ public abstract class Rune
 
     public abstract String getName();
 
-    public boolean onRuneRightClick(BlockRightClickEvent event) {
+    public boolean onRunePlace(BlockPlaceEvent event) {
         return false;
     }
 
@@ -54,7 +54,7 @@ public abstract class Rune
         return false;
     }
 
-    public boolean onRuneUseRightClick(BlockRightClickEvent event) {
+    public boolean onRuneUsePlace(BlockPlaceEvent event) {
         return false;
     }
 
