@@ -1,6 +1,6 @@
 package org.cvpcs.bukkit.magickraft.runeset.magickraft;
 
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -213,8 +213,8 @@ public class WaypointRune extends Rune {
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRunePlace(BlockPlaceEvent event) {
-        Block block = event.getBlock();
+    public boolean onRuneInteract(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
 
         // look for a waypoint and see if it's a valid teleporter
         Waypoint wp = new Waypoint();
@@ -278,8 +278,8 @@ public class WaypointRune extends Rune {
     }
 
     @Override
-    public boolean onRuneUsePlace(BlockPlaceEvent event) {
-        Block block = event.getBlock();
+    public boolean onRuneUseInteract(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
 
         // look for a waypoint and see if it's a valid teleporter
         Waypoint wp = new Waypoint();

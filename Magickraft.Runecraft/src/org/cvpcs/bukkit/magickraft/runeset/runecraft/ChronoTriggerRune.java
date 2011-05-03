@@ -3,7 +3,7 @@ package org.cvpcs.bukkit.magickraft.runeset.runecraft;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.cvpcs.bukkit.magickraft.Magickraft;
 import org.cvpcs.bukkit.magickraft.Rune;
 import org.cvpcs.bukkit.magickraft.RuneSet;
@@ -46,9 +46,9 @@ public class ChronoTriggerRune extends Rune
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRunePlace(BlockPlaceEvent event)
+    public boolean onRuneInteract(PlayerInteractEvent event)
     {
-        Block block = event.getBlock();
+        Block block = event.getClickedBlock();
 
         if (canChrono(block))
         {

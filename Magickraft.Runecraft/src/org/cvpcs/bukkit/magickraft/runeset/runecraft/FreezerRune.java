@@ -2,7 +2,7 @@ package org.cvpcs.bukkit.magickraft.runeset.runecraft;
 
 import java.util.List;
 
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
@@ -42,8 +42,8 @@ public class FreezerRune extends Rune {
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRunePlace(BlockPlaceEvent event) {
-        Block block = event.getBlock();
+    public boolean onRuneInteract(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
 
         if (tryRune(block)) {
             List<Block> blocksToFreeze = BlockUtility.getCircleBlocks(block, FREEZE_RADIUS, BlockUtility.Axis.Y);

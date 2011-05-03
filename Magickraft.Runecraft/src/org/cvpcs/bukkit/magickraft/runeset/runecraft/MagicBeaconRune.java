@@ -1,6 +1,6 @@
 package org.cvpcs.bukkit.magickraft.runeset.runecraft;
 
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,8 +35,8 @@ public class MagicBeaconRune extends Rune {
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRunePlace(BlockPlaceEvent event) {
-        Block block = event.getBlock();
+    public boolean onRuneInteract(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
 
         // look for a beacon
         MagicBeacon beacon = getMagicBeacon(block.getLocation());
@@ -61,7 +61,7 @@ public class MagicBeaconRune extends Rune {
                     }
                     block = block.getFace(BlockFace.UP, 1);
                 }
-                block = event.getBlock();
+                block = event.getClickedBlock();
                 while(block.getLocation().getBlockY() > 0) {
                     if(block.getTypeId() == Material.AIR.getId()) {
                         block.setType(Material.GLOWSTONE);

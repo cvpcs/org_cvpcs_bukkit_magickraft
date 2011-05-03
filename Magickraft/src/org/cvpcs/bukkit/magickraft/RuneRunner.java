@@ -1,18 +1,18 @@
 package org.cvpcs.bukkit.magickraft;
 
 import org.bukkit.Material;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
-import org.bukkit.event.block.BlockListener;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class RuneRunner extends BlockListener {
+public class RuneRunner implements Listener {
 
     private List<Rune> mRunes;
 
@@ -33,18 +33,17 @@ public class RuneRunner extends BlockListener {
         mRunes = new ArrayList<Rune>();
     }
 
-    @Override
-    public void onBlockPlace(BlockPlaceEvent event)
+    public void onPlayerInteract(PlayerInteractEvent event)
     {
         // we don't run runes if they're holding a block besides air (we're just like that)
         if(event.getPlayer().getItemInHand().getType().isBlock() &&
                 event.getPlayer().getItemInHand().getType() != Material.AIR) {
             return;
         }
-
+        
         for(Rune rune : mRunes) {
             if (rune.getEnabled()) {
-                if (rune.onRuneUsePlace(event)) {
+                if (rune.onRuneUseInteract(event)) {
                     return;
                 }
             }
@@ -52,14 +51,13 @@ public class RuneRunner extends BlockListener {
 
         for(Rune rune : mRunes) {
             if (rune.getEnabled()) {
-                if (rune.onRunePlace(event)) {
+                if (rune.onRuneInteract(event)) {
                     return;
                 }
             }
         }
     }
 
-    @Override
     public void onBlockDamage(BlockDamageEvent event) {
         for(Rune rune : mRunes) {
             if (rune.getEnabled()) {
@@ -78,7 +76,6 @@ public class RuneRunner extends BlockListener {
         }
     }
 
-    @Override
     public void onBlockBreak(BlockBreakEvent event) {
         for(Rune rune : mRunes) {
             if (rune.getEnabled()) {
@@ -97,7 +94,6 @@ public class RuneRunner extends BlockListener {
         }
     }
 
-    @Override
     public void onBlockRedstoneChange(BlockRedstoneEvent event) {
         for(Rune rune : mRunes) {
             if (rune.getEnabled()) {

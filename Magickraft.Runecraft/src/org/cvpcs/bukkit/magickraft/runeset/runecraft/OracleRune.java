@@ -1,6 +1,6 @@
 package org.cvpcs.bukkit.magickraft.runeset.runecraft;
 
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.block.Block;
 import org.bukkit.Material;
 
@@ -34,8 +34,8 @@ public class OracleRune extends Rune {
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRunePlace(BlockPlaceEvent event) {
-        Block block = event.getBlock();
+    public boolean onRuneInteract(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
 
         if (tryRune(block)) {
             int blockTier = TierUtility.getTier(block);

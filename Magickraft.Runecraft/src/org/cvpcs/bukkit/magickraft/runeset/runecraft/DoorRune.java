@@ -2,7 +2,7 @@ package org.cvpcs.bukkit.magickraft.runeset.runecraft;
 
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
@@ -89,8 +89,8 @@ public class DoorRune extends Rune {
     public String getName() { return NAME; }
 
     @Override
-    public boolean onRunePlace(BlockPlaceEvent event) {
-        Block block = event.getBlock();
+    public boolean onRuneInteract(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
 
         // look for a door
         Door door = getDoor(block.getLocation());
@@ -124,8 +124,8 @@ public class DoorRune extends Rune {
     }
 
     @Override
-    public boolean onRuneUsePlace(BlockPlaceEvent event) {
-        Block block = event.getBlock();
+    public boolean onRuneUseInteract(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
 
         // look for a door
         Door door = getDoor(block.getLocation());
