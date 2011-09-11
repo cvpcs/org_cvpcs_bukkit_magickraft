@@ -137,22 +137,22 @@ public class RuneStructure {
             RNMaterialGroup.resetGroups();
 
             // find our "top-left" corner block at the base height
-            Block tlBlock = block.getFace(getDirection(BlockFace.WEST, r), (mWidth - 1)/2); // move "west"
-            tlBlock = tlBlock.getFace(getDirection(BlockFace.NORTH, r), (mLength - 1)/2); // move "north"
-            tlBlock = tlBlock.getFace(BlockFace.DOWN, mClickHeight); // move down if our click height was elevated
+            Block tlBlock = block.getRelative(getDirection(BlockFace.WEST, r), (mWidth - 1)/2); // move "west"
+            tlBlock = tlBlock.getRelative(getDirection(BlockFace.NORTH, r), (mLength - 1)/2); // move "north"
+            tlBlock = tlBlock.getRelative(BlockFace.DOWN, mClickHeight); // move down if our click height was elevated
 
             // now we start scanning
             for(int h = 0; h < mHeight; h++) {
                 // tlBlock for this height
-                Block hBlock = tlBlock.getFace(BlockFace.UP, h);
+                Block hBlock = tlBlock.getRelative(BlockFace.UP, h);
 
                 for(int l = 0; l < mLength; l++) {
                     // hBlock for this row
-                    Block lBlock = hBlock.getFace(getDirection(BlockFace.SOUTH, r), l);
+                    Block lBlock = hBlock.getRelative(getDirection(BlockFace.SOUTH, r), l);
 
                     for(int w = 0; w < mWidth; w++) {
                         // block to test
-                        Block wBlock = lBlock.getFace(getDirection(BlockFace.EAST, r), w);
+                        Block wBlock = lBlock.getRelative(getDirection(BlockFace.EAST, r), w);
 
                         // is this block at the proper tier level?
                         if(!mRuneMap[h][l][w].isValid(wBlock)) {
@@ -179,15 +179,15 @@ public class RuneStructure {
                     // now we start consuming
                     for(int h = 0; h < mHeight; h++) {
                         // tlBlock for this height
-                        Block hBlock = tlBlock.getFace(BlockFace.UP, h);
+                        Block hBlock = tlBlock.getRelative(BlockFace.UP, h);
 
                         for(int l = 0; l < mLength; l++) {
                             // hBlock for this row
-                            Block lBlock = hBlock.getFace(getDirection(BlockFace.SOUTH, r), l);
+                            Block lBlock = hBlock.getRelative(getDirection(BlockFace.SOUTH, r), l);
 
                             for(int w = 0; w < mWidth; w++) {
                                 // block to test
-                                Block wBlock = lBlock.getFace(getDirection(BlockFace.EAST, r), w);
+                                Block wBlock = lBlock.getRelative(getDirection(BlockFace.EAST, r), w);
 
                                 int consumeValue = mRuneConsumptionMap[h][l][w];
 

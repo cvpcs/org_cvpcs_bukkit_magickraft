@@ -101,7 +101,7 @@ public class DoorRune extends Rune {
 
                 // time to create a door!
                 door = new Door();
-                door.key = block.getFace(BlockFace.DOWN, 1).getTypeId();
+                door.key = block.getRelative(BlockFace.DOWN, 1).getTypeId();
                 if(door.key <= 0) {
                     // invalidate the key for air
                     door.key = -1;
@@ -111,8 +111,8 @@ public class DoorRune extends Rune {
                 saveDoor(door);
 
                 // now we reset the door
-                block.getFace(BlockFace.DOWN, 1).setType(block.getType());
-                block.getFace(BlockFace.DOWN, 2).setType(block.getType());
+                block.getRelative(BlockFace.DOWN, 1).setType(block.getType());
+                block.getRelative(BlockFace.DOWN, 2).setType(block.getType());
 
                 event.getPlayer().sendMessage("Door accepted, fill in the side holes to conceal");
 
@@ -131,26 +131,26 @@ public class DoorRune extends Rune {
         Door door = getDoor(block.getLocation());
 
         if(door != null) {
-            if(block.getFace(BlockFace.DOWN, 1).getTypeId() == Material.AIR.getId()) {
+            if(block.getRelative(BlockFace.DOWN, 1).getTypeId() == Material.AIR.getId()) {
                 // door is showing, hide that bitch!
-                block.getFace(BlockFace.DOWN, 1).setType(block.getType());
-                block.getFace(BlockFace.DOWN, 2).setType(block.getType());
+                block.getRelative(BlockFace.DOWN, 1).setType(block.getType());
+                block.getRelative(BlockFace.DOWN, 2).setType(block.getType());
             } else {
                 // door is hiding, show that bitch!
                 if(door.key > 0) {
                     // we have a key, make sure the key is present
                     boolean keyFound = false;
                     Block curBlock;
-                    if((curBlock = block.getFace(BlockFace.DOWN, 2).getFace(BlockFace.NORTH)).getTypeId() == door.key) {
+                    if((curBlock = block.getRelative(BlockFace.DOWN, 2).getRelative(BlockFace.NORTH)).getTypeId() == door.key) {
                         curBlock.setType(Material.AIR);
                         keyFound = true;
-                    } else if((curBlock = block.getFace(BlockFace.DOWN, 2).getFace(BlockFace.EAST)).getTypeId() == door.key) {
+                    } else if((curBlock = block.getRelative(BlockFace.DOWN, 2).getRelative(BlockFace.EAST)).getTypeId() == door.key) {
                         curBlock.setType(Material.AIR);
                         keyFound = true;
-                    } else if((curBlock = block.getFace(BlockFace.DOWN, 2).getFace(BlockFace.SOUTH)).getTypeId() == door.key) {
+                    } else if((curBlock = block.getRelative(BlockFace.DOWN, 2).getRelative(BlockFace.SOUTH)).getTypeId() == door.key) {
                         curBlock.setType(Material.AIR);
                         keyFound = true;
-                    } else if((curBlock = block.getFace(BlockFace.DOWN, 2).getFace(BlockFace.WEST)).getTypeId() == door.key) {
+                    } else if((curBlock = block.getRelative(BlockFace.DOWN, 2).getRelative(BlockFace.WEST)).getTypeId() == door.key) {
                         curBlock.setType(Material.AIR);
                         keyFound = true;
                     }
@@ -160,8 +160,8 @@ public class DoorRune extends Rune {
                     }
                 }
 
-                block.getFace(BlockFace.DOWN, 1).setType(Material.AIR);
-                block.getFace(BlockFace.DOWN, 2).setType(Material.AIR);
+                block.getRelative(BlockFace.DOWN, 1).setType(Material.AIR);
+                block.getRelative(BlockFace.DOWN, 2).setType(Material.AIR);
             }
 
             return true;
@@ -180,12 +180,12 @@ public class DoorRune extends Rune {
                 // we have a door! change its status based on redstone event
                 if(event.getNewCurrent() > 0) {
                     // powered, open the door
-                    block.getFace(BlockFace.DOWN, 1).setType(Material.AIR);
-                    block.getFace(BlockFace.DOWN, 2).setType(Material.AIR);
+                    block.getRelative(BlockFace.DOWN, 1).setType(Material.AIR);
+                    block.getRelative(BlockFace.DOWN, 2).setType(Material.AIR);
                 } else {
                     // unpowered, close the door
-                    block.getFace(BlockFace.DOWN, 1).setType(block.getType());
-                    block.getFace(BlockFace.DOWN, 2).setType(block.getType());
+                    block.getRelative(BlockFace.DOWN, 1).setType(block.getType());
+                    block.getRelative(BlockFace.DOWN, 2).setType(block.getType());
                 }
             }
         }
@@ -202,7 +202,7 @@ public class DoorRune extends Rune {
         Door door = null;
 
         for(int i = 0; i < 3 && door == null; i++) {
-            block = event.getBlock().getFace(BlockFace.UP, i);
+            block = event.getBlock().getRelative(BlockFace.UP, i);
             door = getDoor(block.getLocation());
         }
 
@@ -215,8 +215,8 @@ public class DoorRune extends Rune {
 
             // wipe out the door
             block.setType(Material.AIR);
-            block.getFace(BlockFace.DOWN, 1).setType(Material.AIR);
-            block.getFace(BlockFace.DOWN, 2).setType(Material.AIR);
+            block.getRelative(BlockFace.DOWN, 1).setType(Material.AIR);
+            block.getRelative(BlockFace.DOWN, 2).setType(Material.AIR);
             return true;
         }
 
@@ -237,7 +237,7 @@ public class DoorRune extends Rune {
 
             PreparedStatement stmt = sqlConn.prepareStatement(
                     "select * from doors where w = ? and x = ? and y = ? and z = ?");
-            stmt.setLong(1, loc.getWorld().getId());
+            stmt.setString(1, loc.getWorld().getUID().toString());
             stmt.setInt(2, loc.getBlockX());
             stmt.setInt(3, loc.getBlockY());
             stmt.setInt(4, loc.getBlockZ());
@@ -271,7 +271,7 @@ public class DoorRune extends Rune {
 
             Statement stmt = sqlConn.createStatement();
             stmt.executeUpdate("create table if not exists doors ("
-                    + "w INTEGER NOT NULL, "
+                    + "w TEXT NOT NULL, "
                     + "x INTEGER NOT NULL, "
                     + "y INTEGER NOT NULL, "
                     + "z INTEGER NOT NULL, "
@@ -280,7 +280,7 @@ public class DoorRune extends Rune {
 
             PreparedStatement pstmt = sqlConn.prepareStatement(
                     "insert into doors values (?, ?, ?, ?, ?);");
-            pstmt.setLong(1, d.loc.getWorld().getId());
+            pstmt.setString(1, d.loc.getWorld().getUID().toString());
             pstmt.setInt(2, d.loc.getBlockX());
             pstmt.setInt(3, d.loc.getBlockY());
             pstmt.setInt(4, d.loc.getBlockZ());
@@ -304,7 +304,7 @@ public class DoorRune extends Rune {
 
             PreparedStatement pstmt = sqlConn.prepareStatement(
                     "delete from doors where w = ? and x = ? and y = ? and z = ?");
-            pstmt.setLong(1, d.loc.getWorld().getId());
+            pstmt.setString(1, d.loc.getWorld().getUID().toString());
             pstmt.setInt(2, d.loc.getBlockX());
             pstmt.setInt(3, d.loc.getBlockY());
             pstmt.setInt(4, d.loc.getBlockZ());

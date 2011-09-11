@@ -17,7 +17,6 @@ public class MagickraftRuneSet extends RuneSet {
         super(plugin);
 
         mRunes.add(new AerogaRune(plugin, this));
-        //mRunes.add(new EsunaRune(plugin, this));
         mRunes.add(new FiregaRune(plugin, this));
         mRunes.add(new WaypointRune(plugin, this));
     }

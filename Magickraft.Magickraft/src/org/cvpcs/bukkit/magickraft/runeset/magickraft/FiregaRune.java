@@ -202,7 +202,7 @@ public class FiregaRune extends Rune {
         if (tryRuneWithoutConsumption(block)) {
 
             // oh lord time to burn stuff, first get our tier value though
-            int tier = TierUtility.getTier(block.getFace(BlockFace.DOWN, 1));
+            int tier = TierUtility.getTier(block.getRelative(BlockFace.DOWN, 1));
 
             // now we can consume our rune
             tryRune(block);
@@ -211,7 +211,7 @@ public class FiregaRune extends Rune {
             int radius = FIREGA_SAFETY_RADIUS + (FIREGA_RADIUS_PER_TIER * (tier + 1));
 
             // center for our radius
-            Block center = block.getFace(BlockFace.DOWN, 4);
+            Block center = block.getRelative(BlockFace.DOWN, 4);
 
             // get our safe sphere
             List<Block> safety = BlockUtility.getSphereBlocks(center, FIREGA_SAFETY_RADIUS);
@@ -268,12 +268,12 @@ public class FiregaRune extends Rune {
                     switch(b.getType()) {
                     case AIR:
                         Block[] surrounding = new Block[] {
-                                b.getFace(BlockFace.UP, 1),
-                                b.getFace(BlockFace.DOWN, 1),
-                                b.getFace(BlockFace.NORTH, 1),
-                                b.getFace(BlockFace.SOUTH, 1),
-                                b.getFace(BlockFace.EAST, 1),
-                                b.getFace(BlockFace.WEST, 1),
+                                b.getRelative(BlockFace.UP, 1),
+                                b.getRelative(BlockFace.DOWN, 1),
+                                b.getRelative(BlockFace.NORTH, 1),
+                                b.getRelative(BlockFace.SOUTH, 1),
+                                b.getRelative(BlockFace.EAST, 1),
+                                b.getRelative(BlockFace.WEST, 1),
                             };
 
                         boolean burn = false;

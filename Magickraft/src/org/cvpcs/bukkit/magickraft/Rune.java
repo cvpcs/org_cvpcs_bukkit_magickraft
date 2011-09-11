@@ -10,6 +10,7 @@ import org.bukkit.World;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.Comparable;
+import java.util.UUID;
 
 import org.cvpcs.bukkit.magickraft.runestruct.RuneStructure;
 import org.cvpcs.bukkit.magickraft.runestruct.RuneStructureParser;
@@ -121,14 +122,14 @@ public abstract class Rune
     }
 
     /**
-     * Find a world by its random seed value
+     * Find a world by its random UID value
      *
-     * @param seed The seed of the world you are searching for
+     * @param id The ID of the world you are searching for
      * @return The world if found, null if not found.
      */
-    protected World findWorld(long seed) {
+    protected World findWorld(UUID id) {
         for(World world : mPlugin.getServer().getWorlds()) {
-            if(world.getId() == seed) {
+        	if(world.getUID().equals(id)) {
                 return world;
             }
         }

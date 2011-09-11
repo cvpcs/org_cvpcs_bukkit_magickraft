@@ -51,7 +51,7 @@ public class FreezerRune extends Rune {
             for(Block b : blocksToFreeze) {
                 // if not air, go up until we get there
                 while(b.getType() != Material.AIR && b.getY() < 127) {
-                    b = b.getFace(BlockFace.UP, 1);
+                    b = b.getRelative(BlockFace.UP, 1);
                 }
 
                 // now go back down to the first non-air/non-torch block
@@ -60,7 +60,7 @@ public class FreezerRune extends Rune {
                                     b.getType() == Material.TORCH ||
                                     b.getType() == Material.REDSTONE_TORCH_OFF ||
                                     b.getType() == Material.REDSTONE_TORCH_ON)) {
-                    b = b.getFace(BlockFace.DOWN, 1);
+                    b = b.getRelative(BlockFace.DOWN, 1);
                 }
 
                 if(b.getType() == Material.WATER ||
@@ -80,7 +80,7 @@ public class FreezerRune extends Rune {
                         b.setType(Material.COBBLESTONE);
                     }
 
-                    b.getFace(BlockFace.UP, 1).setType(Material.SNOW);
+                    b.getRelative(BlockFace.UP, 1).setType(Material.SNOW);
                 }
             }
 

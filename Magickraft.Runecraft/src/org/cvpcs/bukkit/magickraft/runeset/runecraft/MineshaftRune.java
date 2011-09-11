@@ -413,7 +413,7 @@ public class MineshaftRune extends Rune {
             block.setType(Material.AIR);
 
             // move down
-            block = block.getFace(BlockFace.DOWN, 1);
+            block = block.getRelative(BlockFace.DOWN, 1);
 
             // start cycling
             for(int t = 0; t < tier; t++) {
@@ -425,14 +425,14 @@ public class MineshaftRune extends Rune {
                     }
 
                     // clear all blocks surrounding this one including this one
-                    block.getFace(BlockFace.NORTH).setType(Material.AIR);
-                    block.getFace(BlockFace.NORTH_EAST).setType(Material.AIR);
-                    block.getFace(BlockFace.EAST).setType(Material.AIR);
-                    block.getFace(BlockFace.SOUTH_EAST).setType(Material.AIR);
-                    block.getFace(BlockFace.SOUTH).setType(Material.AIR);
-                    block.getFace(BlockFace.SOUTH_WEST).setType(Material.AIR);
-                    block.getFace(BlockFace.WEST).setType(Material.AIR);
-                    block.getFace(BlockFace.NORTH_WEST).setType(Material.AIR);
+                    block.getRelative(BlockFace.NORTH).setType(Material.AIR);
+                    block.getRelative(BlockFace.NORTH_EAST).setType(Material.AIR);
+                    block.getRelative(BlockFace.EAST).setType(Material.AIR);
+                    block.getRelative(BlockFace.SOUTH_EAST).setType(Material.AIR);
+                    block.getRelative(BlockFace.SOUTH).setType(Material.AIR);
+                    block.getRelative(BlockFace.SOUTH_WEST).setType(Material.AIR);
+                    block.getRelative(BlockFace.WEST).setType(Material.AIR);
+                    block.getRelative(BlockFace.NORTH_WEST).setType(Material.AIR);
                     block.setType(Material.AIR);
 
                     // now we find the rotation of our step for this level
@@ -441,26 +441,26 @@ public class MineshaftRune extends Rune {
                     // set the step
                     switch(rotation) {
                     case 0:
-                        block.getFace(BlockFace.NORTH_WEST).setType(Material.DIRT);
-                        block.getFace(BlockFace.NORTH).setType(Material.DIRT);
+                        block.getRelative(BlockFace.NORTH_WEST).setType(Material.DIRT);
+                        block.getRelative(BlockFace.NORTH).setType(Material.DIRT);
                         break;
                     case 1:
-                        block.getFace(BlockFace.NORTH_EAST).setType(Material.DIRT);
-                        block.getFace(BlockFace.EAST).setType(Material.DIRT);
+                        block.getRelative(BlockFace.NORTH_EAST).setType(Material.DIRT);
+                        block.getRelative(BlockFace.EAST).setType(Material.DIRT);
                         break;
                     case 2:
-                        block.getFace(BlockFace.SOUTH_EAST).setType(Material.DIRT);
-                        block.getFace(BlockFace.SOUTH).setType(Material.DIRT);
+                        block.getRelative(BlockFace.SOUTH_EAST).setType(Material.DIRT);
+                        block.getRelative(BlockFace.SOUTH).setType(Material.DIRT);
                         break;
                        default:
                     case 3:
-                        block.getFace(BlockFace.SOUTH_WEST).setType(Material.DIRT);
-                        block.getFace(BlockFace.WEST).setType(Material.DIRT);
+                        block.getRelative(BlockFace.SOUTH_WEST).setType(Material.DIRT);
+                        block.getRelative(BlockFace.WEST).setType(Material.DIRT);
                         break;
                     }
 
                     // increment the depth
-                    block = block.getFace(BlockFace.DOWN, 1);
+                    block = block.getRelative(BlockFace.DOWN, 1);
                 }
             }
 

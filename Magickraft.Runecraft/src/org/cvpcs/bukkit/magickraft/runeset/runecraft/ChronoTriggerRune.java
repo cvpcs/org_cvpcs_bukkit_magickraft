@@ -58,84 +58,84 @@ public class ChronoTriggerRune extends Rune
                 event.getPlayer().sendMessage("The sun cannot see your rune.");
             else
             {
-                if (block.getFace(BlockFace.WEST,2).getType()==Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.WEST,2).getType()==Material.REDSTONE_WIRE)
+                if (block.getRelative(BlockFace.WEST,2).getType()==Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.WEST,2).getType()==Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.WEST,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.WEST,2).setType(Material.AIR);
                     block.getWorld().setTime(750);
                 }
-                else if(block.getFace(BlockFace.WEST,2).getFace(BlockFace.NORTH).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.WEST,2).getFace(BlockFace.NORTH).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.WEST,2).getRelative(BlockFace.NORTH).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.WEST,2).getRelative(BlockFace.NORTH).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.WEST,2).getFace(BlockFace.NORTH).setType(Material.AIR);
+                    block.getRelative(BlockFace.WEST,2).getRelative(BlockFace.NORTH).setType(Material.AIR);
                     block.getWorld().setTime(2250);
                 }
-                else if(block.getFace(BlockFace.NORTH_WEST,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.NORTH_WEST,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.NORTH_WEST,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.NORTH_WEST,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.NORTH_WEST,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.NORTH_WEST,2).setType(Material.AIR);
                     block.getWorld().setTime(3750);
                 }
-                else if(block.getFace(BlockFace.WEST).getFace(BlockFace.NORTH,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.WEST).getFace(BlockFace.NORTH,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.WEST).getRelative(BlockFace.NORTH,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.WEST).getRelative(BlockFace.NORTH,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.WEST).getFace(BlockFace.NORTH,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.WEST).getRelative(BlockFace.NORTH,2).setType(Material.AIR);
                     block.getWorld().setTime(5250);
                 }
-                else if(block.getFace(BlockFace.NORTH,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.NORTH,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.NORTH,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.NORTH,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.NORTH,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.NORTH,2).setType(Material.AIR);
                     block.getWorld().setTime(6750);
                 }
-                else if(block.getFace(BlockFace.NORTH,2).getFace(BlockFace.EAST).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.NORTH,2).getFace(BlockFace.EAST).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.NORTH,2).getRelative(BlockFace.EAST).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.NORTH,2).getRelative(BlockFace.EAST).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.NORTH,2).getFace(BlockFace.EAST).setType(Material.AIR);
+                    block.getRelative(BlockFace.NORTH,2).getRelative(BlockFace.EAST).setType(Material.AIR);
                     block.getWorld().setTime(8250);
                 }
-                else if(block.getFace(BlockFace.NORTH_EAST,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.NORTH_EAST,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.NORTH_EAST,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.NORTH_EAST,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.NORTH_EAST,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.NORTH_EAST,2).setType(Material.AIR);
                     block.getWorld().setTime(9750);
                 }
-                else if(block.getFace(BlockFace.NORTH).getFace(BlockFace.EAST,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.NORTH).getFace(BlockFace.EAST,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.NORTH).getRelative(BlockFace.EAST,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.NORTH).getRelative(BlockFace.EAST,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.NORTH).getFace(BlockFace.EAST,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.NORTH).getRelative(BlockFace.EAST,2).setType(Material.AIR);
                     block.getWorld().setTime(11250);
                 }
-                else if(block.getFace(BlockFace.EAST,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.EAST,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.EAST,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.EAST,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.EAST,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.EAST,2).setType(Material.AIR);
                     block.getWorld().setTime(12750);
                 }
-                else if(block.getFace(BlockFace.EAST,2).getFace(BlockFace.SOUTH).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.EAST,2).getFace(BlockFace.SOUTH).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.EAST,2).getRelative(BlockFace.SOUTH).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.EAST,2).getRelative(BlockFace.SOUTH).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.EAST,2).getFace(BlockFace.SOUTH).setType(Material.AIR);
+                    block.getRelative(BlockFace.EAST,2).getRelative(BlockFace.SOUTH).setType(Material.AIR);
                     block.getWorld().setTime(14250);
                 }
-                else if(block.getFace(BlockFace.SOUTH_EAST,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.SOUTH_EAST,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.SOUTH_EAST,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.SOUTH_EAST,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.SOUTH_EAST,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.SOUTH_EAST,2).setType(Material.AIR);
                     block.getWorld().setTime(15750);
                 }
-                else if(block.getFace(BlockFace.EAST).getFace(BlockFace.SOUTH,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.EAST).getFace(BlockFace.SOUTH,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.EAST).getRelative(BlockFace.SOUTH,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.EAST).getRelative(BlockFace.SOUTH,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.EAST).getFace(BlockFace.SOUTH,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.EAST).getRelative(BlockFace.SOUTH,2).setType(Material.AIR);
                     block.getWorld().setTime(17250);
                 }
-                else if(block.getFace(BlockFace.SOUTH,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.SOUTH,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.SOUTH,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.SOUTH,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.SOUTH,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.SOUTH,2).setType(Material.AIR);
                     block.getWorld().setTime(18750);
                 }
-                else if(block.getFace(BlockFace.SOUTH,2).getFace(BlockFace.WEST).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.SOUTH,2).getFace(BlockFace.WEST).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.SOUTH,2).getRelative(BlockFace.WEST).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.SOUTH,2).getRelative(BlockFace.WEST).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.SOUTH,2).getFace(BlockFace.WEST).setType(Material.AIR);
+                    block.getRelative(BlockFace.SOUTH,2).getRelative(BlockFace.WEST).setType(Material.AIR);
                     block.getWorld().setTime(20250);
                 }
-                else if(block.getFace(BlockFace.SOUTH_WEST,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.SOUTH_WEST,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.SOUTH_WEST,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.SOUTH_WEST,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.SOUTH_WEST,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.SOUTH_WEST,2).setType(Material.AIR);
                     block.getWorld().setTime(21750);
                 }
-                else if(block.getFace(BlockFace.SOUTH).getFace(BlockFace.WEST,2).getType() == Material.REDSTONE_TORCH_ON || block.getFace(BlockFace.SOUTH).getFace(BlockFace.WEST,2).getType() == Material.REDSTONE_WIRE)
+                else if(block.getRelative(BlockFace.SOUTH).getRelative(BlockFace.WEST,2).getType() == Material.REDSTONE_TORCH_ON || block.getRelative(BlockFace.SOUTH).getRelative(BlockFace.WEST,2).getType() == Material.REDSTONE_WIRE)
                 {
-                    block.getFace(BlockFace.SOUTH).getFace(BlockFace.WEST,2).setType(Material.AIR);
+                    block.getRelative(BlockFace.SOUTH).getRelative(BlockFace.WEST,2).setType(Material.AIR);
                     block.getWorld().setTime(23250);
                 }
             }

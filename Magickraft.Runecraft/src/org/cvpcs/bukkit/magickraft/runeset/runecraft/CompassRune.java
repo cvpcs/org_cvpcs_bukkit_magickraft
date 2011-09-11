@@ -25,12 +25,12 @@ public class CompassRune extends Rune {
         Block block = event.getClickedBlock();
 
         if (tryRune(block)) {
-            block.getFace(BlockFace.NORTH).setType(block.getType());
+            block.getRelative(BlockFace.NORTH).setType(block.getType());
             block.setType(Material.AIR);
-            block.getFace(BlockFace.EAST).setType(block.getFace(BlockFace.NORTH_EAST).getType());
-            block.getFace(BlockFace.NORTH_EAST).setType(Material.AIR);
-            block.getFace(BlockFace.WEST).setType(block.getFace(BlockFace.NORTH_WEST).getType());
-            block.getFace(BlockFace.NORTH_WEST).setType(Material.AIR);
+            block.getRelative(BlockFace.EAST).setType(block.getRelative(BlockFace.NORTH_EAST).getType());
+            block.getRelative(BlockFace.NORTH_EAST).setType(Material.AIR);
+            block.getRelative(BlockFace.WEST).setType(block.getRelative(BlockFace.NORTH_WEST).getType());
+            block.getRelative(BlockFace.NORTH_WEST).setType(Material.AIR);
             return true;
         }
 

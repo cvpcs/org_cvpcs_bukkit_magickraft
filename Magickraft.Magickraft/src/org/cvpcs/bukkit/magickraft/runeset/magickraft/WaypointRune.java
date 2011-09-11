@@ -27,6 +27,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.DriverManager;
+import java.util.UUID;
 
 public class WaypointRune extends Rune {
 
@@ -223,10 +224,10 @@ public class WaypointRune extends Rune {
                 // we have a valid rune, time to do some shit!
                 wp.mIsTeleporter = (block.getTypeId() == TELEPORT_MATERIAL.getId());
                 wp.mLocation = block.getLocation();
-                wp.mSignature = block.getFace(BlockFace.NORTH, 1).getType().toString() + "."
-                        + block.getFace(BlockFace.EAST, 1).getType().toString() + "."
-                        + block.getFace(BlockFace.SOUTH, 1).getType().toString() + "."
-                        + block.getFace(BlockFace.WEST, 1).getType().toString();
+                wp.mSignature = block.getRelative(BlockFace.NORTH, 1).getType().toString() + "."
+                        + block.getRelative(BlockFace.EAST, 1).getType().toString() + "."
+                        + block.getRelative(BlockFace.SOUTH, 1).getType().toString() + "."
+                        + block.getRelative(BlockFace.WEST, 1).getType().toString();
 
                 if(wp.mSignature.contains(TELEPORT_MATERIAL.toString()) ||
                         wp.mSignature.contains(WAYPOINT_MATERIAL.toString())) {
@@ -301,8 +302,8 @@ public class WaypointRune extends Rune {
 
                             // continually raise the teleport destination up until we are in a "safe" zone
                             while(!(destBlock.getTypeId() == Material.AIR.getId() &&
-                                    destBlock.getFace(BlockFace.DOWN, 1).getTypeId() == Material.AIR.getId())) {
-                                destBlock = destBlock.getFace(BlockFace.UP, 1);
+                                    destBlock.getRelative(BlockFace.DOWN, 1).getTypeId() == Material.AIR.getId())) {
+                                destBlock = destBlock.getRelative(BlockFace.UP, 1);
                             }
 
                             // teleport!
@@ -368,25 +369,25 @@ public class WaypointRune extends Rune {
 
             // make sure we are talking about a valid waypoint
             if(tryRune(block)) {
-                Block nBlock = block.getFace(BlockFace.NORTH, 2);
+                Block nBlock = block.getRelative(BlockFace.NORTH, 2);
                 nBlock.setType(mat);
-                nBlock.getFace(BlockFace.WEST, 1).setType(mat);
-                nBlock.getFace(BlockFace.EAST, 1).setType(mat);
+                nBlock.getRelative(BlockFace.WEST, 1).setType(mat);
+                nBlock.getRelative(BlockFace.EAST, 1).setType(mat);
 
-                Block eBlock = block.getFace(BlockFace.EAST, 2);
+                Block eBlock = block.getRelative(BlockFace.EAST, 2);
                 eBlock.setType(mat);
-                eBlock.getFace(BlockFace.NORTH, 1).setType(mat);
-                eBlock.getFace(BlockFace.SOUTH, 1).setType(mat);
+                eBlock.getRelative(BlockFace.NORTH, 1).setType(mat);
+                eBlock.getRelative(BlockFace.SOUTH, 1).setType(mat);
 
-                Block sBlock = block.getFace(BlockFace.SOUTH, 2);
+                Block sBlock = block.getRelative(BlockFace.SOUTH, 2);
                 sBlock.setType(mat);
-                sBlock.getFace(BlockFace.WEST, 1).setType(mat);
-                sBlock.getFace(BlockFace.EAST, 1).setType(mat);
+                sBlock.getRelative(BlockFace.WEST, 1).setType(mat);
+                sBlock.getRelative(BlockFace.EAST, 1).setType(mat);
 
-                Block wBlock = block.getFace(BlockFace.WEST, 2);
+                Block wBlock = block.getRelative(BlockFace.WEST, 2);
                 wBlock.setType(mat);
-                wBlock.getFace(BlockFace.NORTH, 1).setType(mat);
-                wBlock.getFace(BlockFace.SOUTH, 1).setType(mat);
+                wBlock.getRelative(BlockFace.NORTH, 1).setType(mat);
+                wBlock.getRelative(BlockFace.SOUTH, 1).setType(mat);
             }
         }
     }
@@ -477,7 +478,7 @@ public class WaypointRune extends Rune {
                         + "(z - ?) <= ? and "
                         + "? <= (z + ?);");
 
-                stmt.setLong(1, loc.getWorld().getId());
+                stmt.setString(1, loc.getWorld().getUID().toString());
                 stmt.setInt(2, loc.getBlockY());
 
                 stmt.setInt(3, radius);
@@ -493,7 +494,7 @@ public class WaypointRune extends Rune {
                 ResultSet rs = stmt.executeQuery();
 
                 if(rs.next()) {
-                    mLocation = new Location(findWorld(rs.getLong("w")),
+                    mLocation = new Location(findWorld(UUID.fromString(rs.getString("w"))),
                             rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
                     mId = rs.getInt("id");
                     mSignature = rs.getString("signature");
@@ -529,7 +530,7 @@ public class WaypointRune extends Rune {
 
                 PreparedStatement stmt = sqlConn.prepareStatement(
                         "select * from waypoints where w = ? and x = ? and y = ? and z = ?;");
-                stmt.setLong(1, loc.getWorld().getId());
+                stmt.setString(1, loc.getWorld().getUID().toString());
                 stmt.setInt(2, loc.getBlockX());
                 stmt.setInt(3, loc.getBlockY());
                 stmt.setInt(4, loc.getBlockZ());
@@ -578,7 +579,7 @@ public class WaypointRune extends Rune {
 
                 if(rs.next()) {
                     mLocation = new Location(
-                            WaypointRune.super.findWorld(rs.getLong("w")),
+                            WaypointRune.super.findWorld(UUID.fromString(rs.getString("w"))),
                             rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
                     mId = rs.getInt("id");
                     mSignature = rs.getString("signature");
@@ -621,7 +622,7 @@ public class WaypointRune extends Rune {
 
                 if(rs.next()) {
                     mLocation = new Location(
-                            WaypointRune.super.findWorld(rs.getLong("w")),
+                            WaypointRune.super.findWorld(UUID.fromString(rs.getString("w"))),
                             rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
                     mId = rs.getInt("id");
                     mSignature = rs.getString("signature");
@@ -656,7 +657,7 @@ public class WaypointRune extends Rune {
                 Statement stmt = sqlConn.createStatement();
                 stmt.executeUpdate("create table if not exists waypoints ("
                             + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                            + "w INTEGER NOT NULL, "
+                            + "w TEXT NOT NULL, "
                             + "x INTEGER NOT NULL, "
                             + "y INTEGER NOT NULL, "
                             + "z INTEGER NOT NULL, "
@@ -668,7 +669,7 @@ public class WaypointRune extends Rune {
                 if(mId < 0) {
                     PreparedStatement pstmt = sqlConn.prepareStatement(
                         "insert into waypoints (w, x, y, z, signature, waypointid, isteleporter) values (?, ?, ?, ?, ?, ?, ?);");
-                    pstmt.setLong(1, mLocation.getWorld().getId());
+                    pstmt.setString(1, mLocation.getWorld().getUID().toString());
                     pstmt.setInt(2, mLocation.getBlockX());
                     pstmt.setInt(3, mLocation.getBlockY());
                     pstmt.setInt(4, mLocation.getBlockZ());
@@ -679,7 +680,7 @@ public class WaypointRune extends Rune {
                 } else {
                     PreparedStatement pstmt = sqlConn.prepareStatement(
                         "update waypoints set w = ?, x = ?, y = ?, z = ?, signature = ?, waypointid = ?, isteleporter = ? where id = ?;");
-                    pstmt.setLong(1, mLocation.getWorld().getId());
+                    pstmt.setString(1, mLocation.getWorld().getUID().toString());
                     pstmt.setInt(2, mLocation.getBlockX());
                     pstmt.setInt(3, mLocation.getBlockY());
                     pstmt.setInt(4, mLocation.getBlockZ());

@@ -207,7 +207,7 @@ public class AerogaRune extends Rune {
         if (tryRuneWithoutConsumption(block)) {
 
             // make sure there's no ceiling
-            if (block.getWorld().getHighestBlockYAt(block.getX(), block.getZ()) != block.getFace(BlockFace.UP, 4).getY()) {
+            if (block.getWorld().getHighestBlockYAt(block.getX(), block.getZ()) != block.getRelative(BlockFace.UP, 4).getY()) {
                 event.getPlayer().sendMessage("Unable to perform Aeroga due to elements in the way");
                 return false;
             }
@@ -215,10 +215,10 @@ public class AerogaRune extends Rune {
             // oh lordy it's time to do this shit.
 
             // get our radius
-            int radius = AEROGA_RADIUS_PER_TIER * (TierUtility.getTier(block.getFace(BlockFace.DOWN, 1)) + 1);
+            int radius = AEROGA_RADIUS_PER_TIER * (TierUtility.getTier(block.getRelative(BlockFace.DOWN, 1)) + 1);
 
             // center for our sphere
-            Block center = block.getFace(BlockFace.DOWN, 4);
+            Block center = block.getRelative(BlockFace.DOWN, 4);
             World world = center.getWorld();
 
             // first get a circle around our base
@@ -310,7 +310,7 @@ public class AerogaRune extends Rune {
                 }
 
                 // we are definitely risen now, so consume the rune
-                tryRune(block.getFace(BlockFace.UP, raise));
+                tryRune(block.getRelative(BlockFace.UP, raise));
 
                 // alert the player of their awesomeness
                 event.getPlayer().sendMessage("Aeroga has raised the land into the sky!");

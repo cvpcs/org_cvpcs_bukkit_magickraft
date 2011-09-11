@@ -47,7 +47,7 @@ public class MagicBeaconRune extends Rune {
             if (tryRune(block)) {
                 // time to create a beacon!
                 beacon = new MagicBeacon();
-                beacon.w = block.getWorld().getId();
+                beacon.w = block.getWorld().getUID().toString();
                 beacon.x = block.getLocation().getBlockX();
                 beacon.z = block.getLocation().getBlockZ();
 
@@ -59,14 +59,14 @@ public class MagicBeaconRune extends Rune {
                     if(block.getTypeId() == Material.AIR.getId()) {
                         block.setType(Material.GLOWSTONE);
                     }
-                    block = block.getFace(BlockFace.UP, 1);
+                    block = block.getRelative(BlockFace.UP, 1);
                 }
                 block = event.getClickedBlock();
                 while(block.getLocation().getBlockY() > 0) {
                     if(block.getTypeId() == Material.AIR.getId()) {
                         block.setType(Material.GLOWSTONE);
                     }
-                    block = block.getFace(BlockFace.DOWN, 1);
+                    block = block.getRelative(BlockFace.DOWN, 1);
                 }
 
 
@@ -96,14 +96,14 @@ public class MagicBeaconRune extends Rune {
                 if(block.getTypeId() == Material.GLOWSTONE.getId()) {
                     block.setType(Material.AIR);
                 }
-                block = block.getFace(BlockFace.UP, 1);
+                block = block.getRelative(BlockFace.UP, 1);
             }
             block = event.getBlock();
             while(block.getLocation().getBlockY() > 0) {
                 if(block.getTypeId() == Material.GLOWSTONE.getId()) {
                     block.setType(Material.AIR);
                 }
-                block = block.getFace(BlockFace.DOWN, 1);
+                block = block.getRelative(BlockFace.DOWN, 1);
             }
 
 
@@ -114,7 +114,7 @@ public class MagicBeaconRune extends Rune {
     }
 
     private class MagicBeacon {
-        public long w;
+        public String w;
         public int x;
         public int z;
     }
@@ -128,7 +128,7 @@ public class MagicBeaconRune extends Rune {
 
             PreparedStatement stmt = sqlConn.prepareStatement(
                     "select * from beacons where w = ? and x = ? and z = ?");
-            stmt.setLong(1, loc.getWorld().getId());
+            stmt.setString(1, loc.getWorld().getUID().toString());
             stmt.setInt(2, loc.getBlockX());
             stmt.setInt(3, loc.getBlockZ());
 
@@ -136,7 +136,7 @@ public class MagicBeaconRune extends Rune {
 
             if(rs.next()) {
                 b = new MagicBeacon();
-                b.w = loc.getWorld().getId();
+                b.w = loc.getWorld().getUID().toString();
                 b.x = loc.getBlockX();
                 b.z = loc.getBlockZ();
             }
@@ -163,14 +163,14 @@ public class MagicBeaconRune extends Rune {
 
             Statement stmt = sqlConn.createStatement();
             stmt.executeUpdate("create table if not exists beacons ("
-                    + "w INTEGER NOT NULL, "
+                    + "w TEXT NOT NULL, "
                     + "x INTEGER NOT NULL, "
                     + "z INTEGER NOT NULL, "
                     + "PRIMARY KEY (w, x, z));");
 
             PreparedStatement pstmt = sqlConn.prepareStatement(
                     "insert into beacons values (?, ?, ?);");
-            pstmt.setLong(1, b.w);
+            pstmt.setString(1, b.w);
             pstmt.setInt(2, b.x);
             pstmt.setInt(3, b.z);
             pstmt.executeUpdate();
@@ -193,7 +193,7 @@ public class MagicBeaconRune extends Rune {
 
             PreparedStatement pstmt = sqlConn.prepareStatement(
                     "delete from beacons where w = ? and x = ? and z = ?");
-            pstmt.setLong(1, b.w);
+            pstmt.setString(1, b.w);
             pstmt.setInt(2, b.x);
             pstmt.setInt(3, b.z);
             pstmt.executeUpdate();

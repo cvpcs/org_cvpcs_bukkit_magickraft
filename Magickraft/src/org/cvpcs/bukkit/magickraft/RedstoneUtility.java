@@ -19,13 +19,13 @@ public class RedstoneUtility {
     public static ArrayList<Block> getAffectedBlocks(BlockRedstoneEvent event) {
         // array list! yay
         ArrayList<Block> blocks = new ArrayList<Block>();
-
+        
         // get the redstone block
         Block redstone = event.getBlock();
 
         // cycle through affected block faces and return blocks in those directions
         for(BlockFace face : getAffectedFaces(redstone)) {
-            blocks.add(redstone.getFace(face, 1));
+            blocks.add(redstone.getRelative(face, 1));
         }
 
         return blocks;
