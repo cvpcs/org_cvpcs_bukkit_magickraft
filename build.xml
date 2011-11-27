@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="magickraft" default="release" basedir=".">
+  <!-- description -->
+  <description>
+    build file for the magickraft project
+  </description>
+  
+  <!-- properties -->
+  <property name="bin" location="bin" />
+  <property name="doc" location="doc" />
+  <property name="lib" location="lib" />
+  <property name="src" location="src" />
+
+  <!-- paths -->
+  <path id="cp.libs">
+    <fileset dir="${lib}">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+  <!-- targets -->
+  <target name="init">
+    <tstamp />
+  </target>
+
+  <target name="compile" depends="init">
+    <mkdir dir="${bin}" />
+
+    <javac srcdir="${src}" destdir="${bin}">
+      <classpath refid="cp.libs" />
+    </javac>
+  </target>
+
+  <target name="release" depends="compile">
+    <mkdir dir="${bin}" />
+
+    <jar jarfile="${bin}/magickraft-${DSTAMP}.jar">
+      <fileset dir="${bin}">
+        <include name="**/*.class" />
+        <exclude name="**/runeset/**/*.class" />
+      </fileset>
+      <fileset dir="${doc}">
+        <include name="README" />
+        <include name="plugin.yml" />
+      </fileset>
+    </jar>
+
+    <jar jarfile="${bin}/magickraft.runecraft-${DSTAMP}.jar">
+      <fileset dir="${bin}">
+        <include name="**/runeset/runecraft/**/*.class" />
+      </fileset>
+      <zipfileset dir="${doc}/runeset_runecraft" fullpath="" />
+    </jar>
+
+    <jar jarfile="${bin}/magickraft.magickraft-${DSTAMP}.jar">
+      <fileset dir="${bin}">
+        <include name="**/runeset/magickraft/**/*.class" />
+      </fileset>
+      <zipfileset dir="${doc}/runeset_magickraft" fullpath="" />
+    </jar>
+  </target>
+
+  <target name="clean">
+    <delete dir="${bin}" />
+  </target>
+</project>
