@@ -1,7 +1,5 @@
 package org.cvpcs.bukkit.magickraft;
 
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -35,10 +33,7 @@ public class Magickraft extends JavaPlugin {
 
         mRuneRunner = new RuneRunner();
 
-        getServer().getPluginManager().registerEvent(Event.Type.PLAYER_INTERACT, mRuneRunner, Priority.Normal, this);
-        getServer().getPluginManager().registerEvent(Event.Type.BLOCK_DAMAGE, mRuneRunner, Priority.Normal, this);
-        getServer().getPluginManager().registerEvent(Event.Type.BLOCK_BREAK, mRuneRunner, Priority.Normal, this);
-        getServer().getPluginManager().registerEvent(Event.Type.REDSTONE_CHANGE, mRuneRunner, Priority.Normal, this);
+        getServer().getPluginManager().registerEvents(mRuneRunner, this);
 
         ArrayList<Rune> runes = new ArrayList<Rune>();
 

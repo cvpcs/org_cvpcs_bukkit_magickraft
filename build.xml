@@ -11,6 +11,9 @@
   <property name="lib" location="lib" />
   <property name="src" location="src" />
 
+  <property name="build.version" value="0" />
+  <property name="build.number" value="0" />
+
   <!-- paths -->
   <path id="cp.libs">
     <fileset dir="${lib}">
@@ -19,11 +22,7 @@
   </path>
 
   <!-- targets -->
-  <target name="init">
-    <tstamp />
-  </target>
-
-  <target name="compile" depends="init">
+  <target name="compile">
     <mkdir dir="${bin}" />
 
     <javac srcdir="${src}" destdir="${bin}">
@@ -34,25 +33,31 @@
   <target name="release" depends="compile">
     <mkdir dir="${bin}" />
 
-    <jar jarfile="${bin}/magickraft-${DSTAMP}.jar">
+    <!-- setup the plugin.yml file -->
+    <copy file="${doc}/plugin.yml" tofile="${bin}/plugin.yml" overwrite="true" />
+    <replace file="${bin}/plugin.yml">
+      <replacefilter token="@NAME@" value="${ant.project.name}" />
+      <replacefilter token="@VERSION@" value="${build.version}-b${build.number}" />
+    </replace>
+
+    <!-- create the jar file -->
+    <jar jarfile="${bin}/magickraft.jar">
       <fileset dir="${bin}">
         <include name="**/*.class" />
         <exclude name="**/runeset/**/*.class" />
       </fileset>
-      <fileset dir="${doc}">
-        <include name="README" />
-        <include name="plugin.yml" />
-      </fileset>
+      <zipfileset file="${bin}/plugin.yml" fullpath="plugin.yml" />
+      <zipfileset file="${doc}/README" fullpath="README" />
     </jar>
 
-    <jar jarfile="${bin}/magickraft.runecraft-${DSTAMP}.jar">
+    <jar jarfile="${bin}/magickraft.runecraft.jar">
       <fileset dir="${bin}">
         <include name="**/runeset/runecraft/**/*.class" />
       </fileset>
       <zipfileset dir="${doc}/runeset_runecraft" fullpath="" />
     </jar>
 
-    <jar jarfile="${bin}/magickraft.magickraft-${DSTAMP}.jar">
+    <jar jarfile="${bin}/magickraft.magickraft.jar">
       <fileset dir="${bin}">
         <include name="**/runeset/magickraft/**/*.class" />
       </fileset>

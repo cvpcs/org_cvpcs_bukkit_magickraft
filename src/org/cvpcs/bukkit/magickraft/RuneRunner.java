@@ -1,6 +1,8 @@
 package org.cvpcs.bukkit.magickraft;
 
 import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
@@ -33,6 +35,7 @@ public class RuneRunner implements Listener {
         mRunes = new ArrayList<Rune>();
     }
 
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerInteract(PlayerInteractEvent event)
     {
         // we don't run runes if they're holding a block besides air (we're just like that)
@@ -58,6 +61,7 @@ public class RuneRunner implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockDamage(BlockDamageEvent event) {
         for(Rune rune : mRunes) {
             if (rune.getEnabled()) {
@@ -76,6 +80,7 @@ public class RuneRunner implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockBreak(BlockBreakEvent event) {
         for(Rune rune : mRunes) {
             if (rune.getEnabled()) {
@@ -94,6 +99,7 @@ public class RuneRunner implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockRedstoneChange(BlockRedstoneEvent event) {
         for(Rune rune : mRunes) {
             if (rune.getEnabled()) {
